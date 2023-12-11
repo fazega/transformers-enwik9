@@ -11,7 +11,7 @@ passed to the device of your choice, and you must configure it yourself.
 ## Installation and usage
 
 ```bash
-git clone https://github.com/deepmind/language_modeling_is_compression.git
+git clone https://github.com/fazega/transformers-enwik9.git
 pip install -r requirements.txt
 python3 main.py
 ```
