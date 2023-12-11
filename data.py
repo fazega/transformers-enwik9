@@ -12,6 +12,7 @@ import numpy as np
 def load_dataset(seq_length: int) -> Sequence[bytes]:
     """Returns an iterator over sequences of bytes, of length seq_length."""
     if not os.path.exists("enwik9"):
+        print("Downloading the dataset...")
         # Downloading and extracting the dataset.
         urllib.request.urlretrieve(
             "https://mattmahoney.net/dc/enwik9.zip",
@@ -19,6 +20,7 @@ def load_dataset(seq_length: int) -> Sequence[bytes]:
         )
         with zipfile.ZipFile("enwik9.zip", "r") as zip_ref:
             zip_ref.extract("enwik9")
+        print("Dataset ready to be used!")
 
     with open("enwik9", "rb") as file:
         all_chunks = list(iter(functools.partial(file.read, seq_length), b""))

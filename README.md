@@ -8,6 +8,9 @@ sequences of bytes randomly extracted from the
 No data or model parallelization implemented. The tensors and the model are
 passed to the device of your choice, and you must configure it yourself.
 
+The dataset will be automatically downloaded and unzipped, ready to be used, if
+you don't have it in the directory already.
+
 ## Installation and usage
 
 ```bash

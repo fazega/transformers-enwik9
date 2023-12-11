@@ -1,4 +1,4 @@
-"""Simple test for wandb."""
+"""Launch script for a given config."""
 
 import dataclasses
 
@@ -8,12 +8,13 @@ import training as training_lib
 
 
 def main():
+    """Trains a model with a config."""
     config = training_lib.TrainConfig(
-        log_frequency=100,
-        training_steps=100_000,
+        log_frequency=10,
+        training_steps=10_000,
         batch_size=32,
         seq_length=128,
-        learning_rate=1e-3,
+        learning_rate=3e-4,
         data_seed=1,
         model_params_seed=1,
     )

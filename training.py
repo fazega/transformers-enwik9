@@ -12,7 +12,7 @@ import data as data_lib
 import network as network_lib
 
 # Change to use your own device.
-_DEVICE = torch.device("mps")
+_DEVICE = torch.device("cpu")
 
 
 @dataclasses.dataclass(kw_only=True)
@@ -46,11 +46,6 @@ def train(config: TrainConfig) -> None:
 
     loss_fn = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
-    scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer,
-        step_size=1000,
-        gamma=0.99,
-    )
 
     dataset = data_lib.load_dataset(seq_length=config.seq_length)
     rng = np.random.default_rng(seed=config.data_seed)
@@ -77,13 +72,12 @@ def train(config: TrainConfig) -> None:
 
         total_loss += loss.item()
         if step % config.log_frequency == 0:
-            lr = scheduler.get_last_lr()[0]
             steps_per_sec = config.log_frequency / (time.time() - start_time)
             avg_loss = total_loss / config.log_frequency
             avg_bpb = avg_loss / math.log(2)
             print(
                 f"| step {step} | "
-                f"lr {lr:02.2f} | steps/s {steps_per_sec:5.2f} | "
+                f"steps/s {steps_per_sec:5.2f} | "
                 f"avg_bpb {avg_bpb:5.3f}"
             )
             wandb.log({"bpb": avg_bpb})
