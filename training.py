@@ -50,7 +50,7 @@ def train(config: TrainConfig) -> None:
     dataset = data_lib.load_dataset(seq_length=config.seq_length)
     rng = np.random.default_rng(seed=config.data_seed)
 
-    total_loss = 0.0
+    loss_window = []
     start_time = time.time()
     for step in range(config.training_steps):
         sequences = data_lib.fetch_random_batch(dataset, config.batch_size, rng)
@@ -70,18 +70,17 @@ def train(config: TrainConfig) -> None:
         )
         optimizer.step()
 
-        total_loss += loss.item()
+        loss_window.append(loss.item())
         if step % config.log_frequency == 0:
             steps_per_sec = config.log_frequency / (time.time() - start_time)
-            avg_loss = total_loss / config.log_frequency
-            avg_bpb = avg_loss / math.log(2)
+            avg_bpb = np.mean(loss_window) / math.log(2)
             print(
                 f"| step {step} | "
                 f"steps/s {steps_per_sec:5.2f} | "
                 f"avg_bpb {avg_bpb:5.3f}"
             )
             wandb.log({"bpb": avg_bpb})
-            total_loss = 0
+            loss_window = []
             start_time = time.time()
 
     wandb.finish()
