@@ -29,7 +29,7 @@ class TrainConfig:
     model_params_seed: int
 
 
-def train(config: TrainConfig):
+def train(config: TrainConfig) -> None:
     """Trains a neural network on enwik8 data."""
     model = network_lib.DecoderOnly(
         vocab_size=256,
