@@ -31,6 +31,9 @@ class TrainConfig:
 
 def train(config: TrainConfig) -> None:
     """Trains a neural network on enwik8 data."""
+    torch.manual_seed(config.model_params_seed)
+    torch.use_deterministic_algorithms(True)
+
     model = network_lib.DecoderOnly(
         vocab_size=256,
         embedding_dim=256,
