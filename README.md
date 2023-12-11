@@ -1,4 +1,4 @@
-# Decoder-only transformers on Wikipedia
+# Decoder-only transformers on Wikipedia
 
 Simple project to get familiarity with open source tools. Training a
 decoder-only transformer with classical sinus/cosinus positional encodings on
