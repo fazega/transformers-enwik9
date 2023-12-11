@@ -15,7 +15,7 @@ import network as network_lib
 _DEVICE = torch.device("mps")
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(kw_only=True)
 class TrainConfig:
     """Config for the training script."""
 
